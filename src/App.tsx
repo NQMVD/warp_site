@@ -1,23 +1,49 @@
-import React, { useState } from "react";
-import arrow from "../arrow.svg";
-import w_warp from "../w_warp.png";
-import a_warp from "../a_warp.png";
-import r_warp from "../r_warp.png";
-import p_warp from "../p_warp.png";
+import React, { useEffect, useState } from "react";
 
 function Panel({ title }: { title: string }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
 
-  const handleSearch = () => {
-    if (query.trim() && !searchHistory.includes(query.trim())) {
-      setSearchHistory((prev) => [query.trim(), ...prev]); // Prepend to start
+  // Load history from localStorage when the component mounts
+  useEffect(() => {
+    const savedHistory = localStorage.getItem(`history-${title}`);
+    if (savedHistory) {
+      setSearchHistory(JSON.parse(savedHistory));
     }
-    setQuery("");
+  }, [title]);
+
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(`history-${title}`, JSON.stringify(searchHistory));
+  }, [searchHistory, title]);
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      // Construct the URL based on the panel's title and query
+      const baseUrls: Record<string, string> = {
+        "CRATES.IO:": "https://crates.io/search?q=",
+        "NIX:":
+          "https://search.nixos.org/packages?channel=24.11&from=0&size=50&sort=relevance&type=packages&query=",
+        "REPOS:": "https://github.com/NQMVD?tab=repositories&q=",
+        "STARS:":
+          "https://github.com/NQMVD?submit=Search&tab=stars&type=&sort=&direction=&submit=Search&q=",
+      };
+
+      const baseUrl = baseUrls[title] || "https://www.google.com/search?q=";
+      const searchUrl = `${baseUrl}${encodeURIComponent(query.trim())}`;
+
+      // Open the URL in a new tab
+      window.open(searchUrl, "_blank");
+
+      // Update the search history
+      if (!searchHistory.includes(query.trim())) {
+        setSearchHistory((prev) => [query.trim(), ...prev]);
+      }
+      setQuery("");
+    }
   };
 
   const handleHistoryClick = (historicalQuery: string, e: React.MouseEvent) => {
-    // Handle Ctrl+Shift+Click to remove
     if (e.shiftKey) {
       setSearchHistory((prev) => prev.filter((q) => q !== historicalQuery));
       return;
@@ -53,7 +79,7 @@ function Panel({ title }: { title: string }) {
                      font-['JetBrains_Mono'] text-base
                      relative
                      overflow-hidden"
-            placeholder="query..."
+            placeholder="name..."
           />
 
           <div className="relative">
@@ -117,22 +143,22 @@ function App() {
             WARP
           </h1>
           <h1 className="font-['Jetbrains_Mono'] text-zinc-400 text-white tracking-wider">
-            (through space or the web...)
+            through space...
           </h1>
         </div>
 
         {/* Grid of panels */}
         <div className="flex-1 grid grid-cols-2 gap-4">
-          <Panel title="CRATE:" />
+          <Panel title="CRATES.IO:" />
           <Panel title="NIX:" />
-          <Panel title="REPO:" />
-          <Panel title="HELIX:" />
+          <Panel title="REPOS:" />
+          <Panel title="STARS:" />
         </div>
 
         {/* Footer */}
         <div className="flex justify-center gap-6 mt-4">
           <a
-            href="https://home.stardive.space"
+            href="https://stardive.space"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-['JetBrains_Mono']"
