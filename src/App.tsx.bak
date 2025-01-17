@@ -1,0 +1,123 @@
+import React, { useState } from "react";
+
+function Panel({ title }: { title: string }) {
+  const [query, setQuery] = useState("");
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
+
+  const handleSearch = () => {
+    if (query.trim() && !searchHistory.includes(query.trim())) {
+      setSearchHistory((prev) => [...prev, query.trim()]);
+    }
+    // TODO: Implement actual search functionality
+    setQuery("");
+  };
+
+  const handleHistoryClick = (historicalQuery: string) => {
+    setQuery(historicalQuery);
+    // TODO: Implement actual search functionality
+  };
+
+  return (
+    <div className="bg-zinc-900/80 rounded-2xl p-6 backdrop-blur-sm
+                    shadow-[0_8px_32px_rgba(0,0,0,0.4)]
+                    border border-zinc-800/50
+                    relative overflow-hidden
+                    h-full">
+      {/* transform transition-all duration-300 hover:scale-[1.02] */}
+      {/* Individual panel noise overlay */}
+      <div className="absolute inset-0 noise mix-blend-overlay opacity-30">
+      </div>
+
+      {/* Panel content */}
+      <div className="relative">
+        <h2 className="font-display text-6xl font-bold text-white mb-6 tracking-wider uppercase">
+          {title}
+        </h2>
+
+        {/* Flex container for input and button */}
+        <div className="flex gap-4 mb-4">
+          {/* Single line 3D Textbox */}
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            className="flex-1 h-12 bg-zinc-900 text-zinc-100 rounded-xl px-4
+                     shadow-[0_0_15px_rgba(0,0,0,0.7)] 
+                     border border-zinc-800
+                     focus:outline-none focus:ring-2 focus:ring-zinc-700
+                     font-display text-base
+                     relative
+                     before:absolute before:inset-0
+                     before:bg-gradient-to-b before:from-zinc-800/20 before:to-transparent"
+            placeholder="query..."
+          />
+
+          {/* Search Button */}
+          <button
+            onClick={handleSearch}
+            className="h-12 px-6 bg-zinc-900 text-zinc-100 rounded-xl
+                     shadow-[0_0_15px_rgba(0,0,0,0.7)] 
+                     border border-zinc-800
+                     hover:bg-zinc-800 
+                     focus:outline-none focus:ring-2 focus:ring-zinc-700
+                     font-display text-base
+                     transform transition-all duration-300 hover:scale-[1.05]
+                     relative
+                     before:absolute before:inset-0
+                     before:bg-gradient-to-b before:from-zinc-800/20 before:to-transparent"
+          >
+            Search
+          </button>
+        </div>
+
+        {/* Search History Grid */}
+        {searchHistory.length > 0 && (
+          <div className="grid grid-cols-3 gap-2 mt-4">
+            {searchHistory.map((historicalQuery, index) => (
+              <button
+                key={index}
+                onClick={() => handleHistoryClick(historicalQuery)}
+                className="px-3 py-2 bg-zinc-800/50 text-zinc-300 rounded-lg
+                         border border-zinc-700/50
+                         hover:bg-zinc-700/50 
+                         focus:outline-none focus:ring-2 focus:ring-zinc-600
+                         font-display text-sm
+                         transform transition-all duration-200 hover:scale-[1.02]
+                         truncate
+                         relative
+                         before:absolute before:inset-0
+                         before:bg-gradient-to-b before:from-zinc-700/20 before:to-transparent"
+              >
+                {historicalQuery}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="relative min-h-screen bg-zinc-900 overflow-hidden">
+      {/* Main noise overlay */}
+      <div className="absolute inset-0 noise mix-blend-overlay opacity-50">
+      </div>
+
+      {/* Content */}
+      <div className="relative min-h-screen p-4">
+        {/* Grid of panels */}
+        <div className="grid grid-cols-2 gap-4 h-screen">
+          <Panel title="CRATE:" />
+          <Panel title="NIX:" />
+          <Panel title="REPO:" />
+          <Panel title="HELIX:" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
