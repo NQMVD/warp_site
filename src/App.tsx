@@ -180,7 +180,7 @@ function App() {
             <span>Home</span>
           </a>
           <a
-            href="https://github.com/NQMVD"
+            href="https://github.com/NQMVD/repos/warp_site"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-['JetBrains_Mono']"
