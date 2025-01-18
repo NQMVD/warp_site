@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function Panel({ title }: { title: string }) {
+function Panel({ title, mute }: { title: string; mute: boolean }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
 
@@ -17,8 +17,34 @@ function Panel({ title }: { title: string }) {
     localStorage.setItem(`history-${title}`, JSON.stringify(searchHistory));
   }, [searchHistory, title]);
 
+  const playClickSound = () => {
+    const sound = new Audio("/sounds/button-2.wav");
+    if (!mute) {
+      sound.play().catch((error) => {
+        console.error("Error playing sound:", error);
+      });
+    }
+  };
+  const playTickSound = () => {
+    const sound = new Audio("/sounds/button-1.wav");
+    if (!mute) {
+      sound.play().catch((error) => {
+        console.error("Error playing sound:", error);
+      });
+    }
+  };
+  const playWhooshSound = () => {
+    const sound = new Audio("/sounds/whoosh-2.wav");
+    if (!mute) {
+      sound.play().catch((error) => {
+        console.error("Error playing sound:", error);
+      });
+    }
+  };
+
   const handleSearch = () => {
     if (query.trim()) {
+      playClickSound();
       // Construct the URL based on the panel's title and query
       const baseUrls: Record<string, string> = {
         "CRATES.IO:": "https://crates.io/search?q=",
@@ -42,8 +68,35 @@ function Panel({ title }: { title: string }) {
       setQuery("");
     }
   };
+  const handleWarp = () => {
+    if (query.trim()) {
+      playWhooshSound();
+      // Construct the URL based on the panel's title and query
+      const baseUrls: Record<string, string> = {
+        "CRATES.IO:": "https://crates.io/crates/",
+        "NIX:":
+          "https://search.nixos.org/packages?channel=24.11&from=0&size=50&sort=relevance&type=packages&query=",
+        "REPOS:": "https://github.com/NQMVD/",
+        "STARS:":
+          "https://github.com/NQMVD?submit=Search&tab=stars&type=&sort=&direction=&submit=Search&q=",
+      };
+
+      const baseUrl = baseUrls[title] || "https://www.google.com/search?q=";
+      const searchUrl = `${baseUrl}${encodeURIComponent(query.trim())}`;
+
+      // Open the URL in a new tab
+      window.open(searchUrl, "_blank");
+
+      // Update the search history
+      if (!searchHistory.includes(query.trim())) {
+        setSearchHistory((prev) => [query.trim(), ...prev]);
+      }
+      setQuery("");
+    }
+  };
 
   const handleHistoryClick = (historicalQuery: string, e: React.MouseEvent) => {
+    playTickSound();
     if (e.shiftKey) {
       setSearchHistory((prev) => prev.filter((q) => q !== historicalQuery));
       return;
@@ -71,11 +124,21 @@ function Panel({ title }: { title: string }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                if (e.shiftKey) handleWarp();
+                else handleSearch();
+              }
+              if (e.key === "ArrowUp" || (e.ctrlKey && e.key === "p")) {
+                if (searchHistory.length > 0) {
+                  handleHistoryClick(searchHistory[0], e);
+                }
+              }
+            }}
             className="flex-1 h-12 bg-zinc-900 text-zinc-100 rounded-xl px-4
                      shadow-[0_0_10px_rgba(0,0,0,0.7)]
                      border border-zinc-800
-                     focus:outline-none focus:ring-2 focus:ring-zinc-700
+                     focus:outline-none focus:ring-1 focus:ring-zinc-700
                      font-['JetBrains_Mono'] text-base
                      relative
                      overflow-hidden"
@@ -89,9 +152,9 @@ function Panel({ title }: { title: string }) {
                        shadow-[0_0_10px_rgba(0,0,0,0.7)]
                        border border-zinc-800
                        hover:bg-zinc-800 
-                       focus:outline-none focus:ring-2 focus:ring-zinc-700
+                       focus:outline-none focus:ring-1 focus:ring-zinc-700
                        font-['JetBrains_Mono'] text-base
-                       transform transition-all duration-300 hover:scale-[1.05]
+                       transform transition-all duration-200 hover:scale-[1.05]
                        relative
                        overflow-hidden"
             >
@@ -99,11 +162,31 @@ function Panel({ title }: { title: string }) {
               <span className="relative">Search</span>
             </button>
           </div>
+
+          {(title == "CRATES.IO:" || title == "REPOS:") && (
+            <div className="relative">
+              <button
+                onClick={handleWarp}
+                className="h-12 px-6 bg-zinc-900 text-zinc-100 rounded-xl
+                       shadow-[0_0_10px_rgba(0,0,0,0.7)]
+                       border border-zinc-800
+                       hover:bg-zinc-800 
+                       focus:outline-none focus:ring-1 focus:ring-zinc-700
+                       font-['JetBrains_Mono'] text-base
+                       transform transition-all duration-200 hover:scale-[1.05]
+                       relative
+                       overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/20 to-transparent rounded-xl" />
+                <span className="relative">WARP</span>
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden">
           {searchHistory.length > 0 && (
-            <div className="grid grid-cols-3 gap-2 mt-4 pr-2">
+            <div className="grid grid-cols-3 gap-2 mt-4 pr-1 pl-1">
               {searchHistory.map((historicalQuery, index) => (
                 <button
                   key={index}
@@ -111,7 +194,7 @@ function Panel({ title }: { title: string }) {
                   className="px-2 py-2 bg-zinc-800/50 text-zinc-300 rounded-lg
                            border border-zinc-700/50
                            hover:bg-zinc-700/50 
-                           focus:outline-none focus:ring-2 focus:ring-zinc-600
+                           focus:outline-none focus:ring-1 focus:ring-zinc-600
                            font-['JetBrains_Mono'] text-sm
                            transform transition-all duration-200 hover:scale-[1.02]
                            truncate
@@ -132,6 +215,27 @@ function Panel({ title }: { title: string }) {
 }
 
 function App() {
+  const [isMuted, setMuted] = useState("");
+  const playSuccessSound = () => {
+    const sound = new Audio("/sounds/success.wav");
+    sound.play().catch((error) => {
+      console.error("Error playing sound:", error);
+    });
+  };
+  const playFailSound = () => {
+    const sound = new Audio("/sounds/fail.wav");
+    sound.play().catch((error) => {
+      console.error("Error playing sound:", error);
+    });
+  };
+  const toggleSounds = () => {
+    setMuted(!isMuted); // doesnt change this tick?
+    if (!isMuted) {
+      playFailSound();
+    } else {
+      playSuccessSound();
+    }
+  };
   return (
     <div className="fixed inset-0 bg-zinc-900 overflow-hidden">
       <div className="absolute inset-0 noise mix-blend-overlay opacity-50" />
@@ -149,10 +253,10 @@ function App() {
 
         {/* Grid of panels */}
         <div className="flex-1 grid grid-cols-2 gap-4">
-          <Panel title="CRATES.IO:" />
-          <Panel title="NIX:" />
-          <Panel title="REPOS:" />
-          <Panel title="STARS:" />
+          <Panel title="CRATES.IO:" mute={isMuted} />
+          <Panel title="NIX:" mute={isMuted} />
+          <Panel title="REPOS:" mute={isMuted} />
+          <Panel title="STARS:" mute={isMuted} />
         </div>
 
         {/* Footer */}
@@ -179,6 +283,55 @@ function App() {
             </svg>
             <span>Home</span>
           </a>
+          <button
+            onClick={toggleSounds}
+            className="h-7 px-6 text-zinc-400 rounded-xl
+                       shadow-[0_0_10px_rgba(0,0,0,0.7)]
+                       hover:text-white
+                       hover:bg-zinc-800 
+                       font-['JetBrains_Mono'] text-base
+                       relative
+                       overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/20 to-transparent rounded-xl" />
+            <span className="relative">
+              {isMuted && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      height="16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="m2.75 1.75 10.5 12.5V1.75L9.318 5.245a2 2 0 0 1-1.328.505H6.11m.14 4.5h-2.5a1 1 0 0 1-1-1v-3.5"
+                      >
+                      </path>
+                    </svg>
+                  ) || (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  height="16"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M12.75 5.75s1.5.75 1.5 2.25-1.5 2.25-1.5 2.25m-3.5-8.5L5.318 5.245a2 2 0 0 1-1.328.505H2.75a1 1 0 0 0-1 1v2.5a1 1 0 0 0 1 1h1.24a2 2 0 0 1 1.328.505L9.25 14.25V1.75Z"
+                  >
+                  </path>
+                </svg>
+              )}
+            </span>
+          </button>
           <a
             href="https://github.com/NQMVD/repos/warp_site"
             target="_blank"
