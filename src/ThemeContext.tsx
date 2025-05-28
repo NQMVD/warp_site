@@ -59,7 +59,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       "peachclouds",
       "aquamarine",
       "milky",
-      "light",
     ];
     const currentIndex = themes.indexOf(theme);
     const nextIndex = (currentIndex + 1) % themes.length;
