@@ -27,7 +27,7 @@ const TextBox = forwardRef<HTMLInputElement, TextBoxProps>(({
   };
 
   const baseClasses = `
-    flex-1 h-12 px-4 text-base rounded-xl
+    flex1 h-12 px-4 text-base rounded-xl
     shadow-theme-button
     border
     focus:outline-none focus:ring-1
@@ -49,7 +49,7 @@ const TextBox = forwardRef<HTMLInputElement, TextBoxProps>(({
   } as React.CSSProperties;
 
   return (
-    <div className="relative">
+    <div className="relative flex-1">
       <input
         ref={ref}
         className={baseClasses}

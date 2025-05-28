@@ -50,7 +50,7 @@ const ShowcasePanel: React.FC = () => {
         {/* Button Variants */}
         <section>
           <h3 className="text-xl font-semibold text-theme-text-secondary mb-4">Button Variants</h3>
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Button variant="primary" enableGradient={true} enableNoise={false}>
               Primary
             </Button>
@@ -66,7 +66,7 @@ const ShowcasePanel: React.FC = () => {
         {/* Button Sizes */}
         <section>
           <h3 className="text-xl font-semibold text-theme-text-secondary mb-4">Button Sizes</h3>
-          <div className="flex flex-wrap gap-4 items-end">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
             <Button size="sm" enableGradient={true} enableNoise={true} noiseOpacity={0.3}>
               Small
             </Button>
@@ -82,7 +82,7 @@ const ShowcasePanel: React.FC = () => {
         {/* Noise Opacity Examples */}
         <section>
           <h3 className="text-xl font-semibold text-theme-text-secondary mb-4">Noise Opacity Variations</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             <Button enableNoise={true} noiseOpacity={0.1} enableGradient={true}>
               Noise 0.1
             </Button>

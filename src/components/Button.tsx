@@ -32,7 +32,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   ...props
 }, ref) => {
   const sizeClasses = {
-    sm: 'h-8 px-8 text-sm',
+    sm: 'h-8 px-4 text-sm',
     md: 'h-12 px-6 text-base',
     lg: 'h-16 px-8 text-lg'
   };
@@ -52,6 +52,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     transform transition-all duration-200 hover:scale-[1.05]
     relative
     overflow-hidden
+    flex items-center justify-center
     ${sizeClasses[size]}
     ${variantClasses[variant]}
     ${className}
@@ -87,38 +88,36 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   };
 
   return (
-    <div className="relative">
-      <button
-        ref={ref}
-        className={baseClasses}
-        style={combinedStyle}
-        onClick={handleClick}
-        {...props}
-      >
-        {/* Noise overlay */}
-        {enableNoise && (
-          <div 
-            className="absolute inset-0 noise mix-blend-overlay pointer-events-none rounded-xl"
-            style={{ opacity: noiseOpacity }}
-          />
-        )}
-        
-        {/* Gradient overlay */}
-        {enableGradient && (
-          <div 
-            className="absolute inset-0 pointer-events-none rounded-xl"
-            style={{
-              background: `linear-gradient(to bottom, ${gradientFrom}, ${gradientTo})`
-            }}
-          />
-        )}
-        
-        {/* Content */}
-        <span className="relative">
-          {children}
-        </span>
-      </button>
-    </div>
+    <button
+      ref={ref}
+      className={baseClasses}
+      style={combinedStyle}
+      onClick={handleClick}
+      {...props}
+    >
+      {/* Noise overlay */}
+      {enableNoise && (
+        <div 
+          className="absolute inset-0 noise mix-blend-overlay pointer-events-none rounded-xl"
+          style={{ opacity: noiseOpacity }}
+        />
+      )}
+      
+      {/* Gradient overlay */}
+      {enableGradient && (
+        <div 
+          className="absolute inset-0 pointer-events-none rounded-xl"
+          style={{
+            background: `linear-gradient(to bottom, ${gradientFrom}, ${gradientTo})`
+          }}
+        />
+      )}
+      
+      {/* Content */}
+      <span className="relative">
+        {children}
+      </span>
+    </button>
   );
 });
 

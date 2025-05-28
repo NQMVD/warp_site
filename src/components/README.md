@@ -137,7 +137,7 @@ A customizable button component with noise texture, gradient overlay, and sound 
 
 ## Sizes
 
-TextBox components have a fixed size (height: 12, padding: 16px, font-size: base) to maintain consistency.
+TextBox components have a fixed size (height: 12, padding: 16px, font-size: base) and use `flex-1` to fill available width dynamically.
 
 ### Button Sizes
 
@@ -214,7 +214,12 @@ Each theme defines optimal noise opacity values:
 - `--textbox-noise-opacity` - Optimal for textboxes
 - `--button-noise-opacity` - Optimal for buttons
 
-## Best Practices
+### Best Practices
+
+### Layout
+- TextBox components automatically fill available width with `flex-1`
+- History buttons use a 4-column grid layout for optimal space usage
+- Small buttons include automatic text centering and proper alignment
 
 ### Noise Texture
 - Use sparingly (0.1-0.4 opacity) for subtle texture
@@ -236,8 +241,9 @@ Each theme defines optimal noise opacity values:
 - Use `primary` for main actions
 - Use `secondary` for supporting actions
 - Use `tertiary` for minimal, subtle actions
-- TextBox components maintain a consistent size across all uses
+- TextBox components maintain a consistent size and fill available width
 - Match button sizes within the same context
+- Small buttons automatically center text and handle width properly
 
 ## ShowcasePanel
 
