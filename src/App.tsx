@@ -5,6 +5,22 @@ import { ThemeIcon } from "./ThemeIcon";
 function Panel({ title, mute }: { title: string; mute: boolean }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  if (title == "CRATES.IO:") {
+    if (!searchHistory.includes("boss-cli")) {
+      setSearchHistory((prev) => ["boss-cli", ...prev]);
+    }
+    if (!searchHistory.includes("needs")) {
+      setSearchHistory((prev) => ["needs", ...prev]);
+    }
+  }
+  if (title == "REPOS:") {
+    if (!searchHistory.includes("boss")) {
+      setSearchHistory((prev) => ["boss", ...prev]);
+    }
+    if (!searchHistory.includes("needs")) {
+      setSearchHistory((prev) => ["needs", ...prev]);
+    }
+  }
 
   // Load history from localStorage when the component mounts
   useEffect(() => {

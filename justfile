@@ -9,3 +9,7 @@ default:
 @run:
     gum log -l "info" "Running the application..."
     deno run dev
+
+@build:
+    gum log -l "info" "Building the application..."
+    deno task build
