@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Style, useStyle, useTheme } from "./ThemeContext";
-import { Button, TextBox } from "./components";
+import { Button, TextBox, HistoryButton } from "./components";
 import { useMobileDetection } from "./hooks/useMobileDetection";
 
 function Panel({ title, mute, style, className }: { title: string; mute: boolean; style: Style; className?: string }) {
@@ -153,7 +153,11 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
               }
               if (e.key === "ArrowUp" || (e.ctrlKey && e.key === "p")) {
                 if (searchHistory.length > 0) {
-                  handleHistoryClick(searchHistory[0], e);
+                  const syntheticEvent = {
+                    shiftKey: e.shiftKey,
+                    preventDefault: () => {},
+                  } as React.MouseEvent;
+                  handleHistoryClick(searchHistory[0], syntheticEvent);
                 }
               }
             }}
@@ -206,20 +210,16 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
             {searchHistory.length > 0 && (
               <div className="grid grid-cols-4 gap-2 mt-4 pr-1 pl-1 max-h-[4.5rem] md:max-h-[7rem]">
                 {searchHistory.map((historicalQuery, index) => (
-                  <Button
+                  <HistoryButton
                     key={index}
                     onClick={(e) => handleHistoryClick(historicalQuery, e)}
                     soundEnabled={true}
                     soundType="tick"
                     muted={mute}
-                    enableGradient={true}
-                    enableNoise={false}
                     variant={style}
-                    size="sm"
-                    className="w-full text-theme-text-quaternary truncate flex items-center justify-center"
                   >
                     {historicalQuery}
-                  </Button>
+                  </HistoryButton>
                 ))}
               </div>
             )}
