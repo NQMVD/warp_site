@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Style, useStyle, useTheme } from "./ThemeContext";
-import { Button, TextBox, HistoryButton } from "./components";
+import { Button, TextBox, HistoryButton, GridOverlay } from "./components";
 import { useMobileDetection } from "./hooks/useMobileDetection";
 
 function Panel({ title, mute, style, className }: { title: string; mute: boolean; style: Style; className?: string }) {
@@ -206,21 +206,24 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
         </div>
 
         {!isMobile && (
-          <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-theme-border-primary scrollbar-track-transparent">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-theme-border-primary scrollbar-track-transparent relative">
+            <GridOverlay buttonHeight={32} />
             {searchHistory.length > 0 && (
-              <div className="grid grid-cols-4 gap-2 mt-4 pr-1 pl-1 max-h-[4.5rem] md:max-h-[7rem]">
-                {searchHistory.map((historicalQuery, index) => (
-                  <HistoryButton
-                    key={index}
-                    onClick={(e) => handleHistoryClick(historicalQuery, e)}
-                    soundEnabled={true}
-                    soundType="tick"
-                    muted={mute}
-                    variant={style}
-                  >
-                    {historicalQuery}
-                  </HistoryButton>
-                ))}
+              <div className="relative mt-4 px-2 max-h-[4.5rem] md:max-h-[7rem]">
+                <div className="grid grid-cols-4 gap-0 relative z-10">
+                  {searchHistory.map((historicalQuery, index) => (
+                    <HistoryButton
+                      key={index}
+                      onClick={(e) => handleHistoryClick(historicalQuery, e)}
+                      soundEnabled={true}
+                      soundType="tick"
+                      muted={mute}
+                      variant={style}
+                    >
+                      {historicalQuery}
+                    </HistoryButton>
+                  ))}
+                </div>
               </div>
             )}
           </div>

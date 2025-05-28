@@ -21,9 +21,9 @@ const HistoryButton = forwardRef<HTMLButtonElement, HistoryButtonProps>(({
   ...props
 }, ref) => {
   const variantClasses = {
-    primary: 'text-theme-text-quaternary hover:bg-theme-bg-tertiary hover:text-theme-text-secondary hover:border-theme-border-secondary',
-    secondary: 'text-theme-text-quaternary hover:bg-theme-bg-secondary hover:text-theme-text-primary hover:border-theme-border-primary',
-    tertiary: 'text-theme-text-quaternary hover:bg-theme-bg-primary hover:text-theme-text-tertiary hover:border-theme-border-tertiary'
+    primary: 'text-theme-text-quaternary opacity-70 hover:opacity-100 hover:bg-theme-bg-tertiary hover:text-theme-text-secondary hover:border-theme-border-secondary',
+    secondary: 'text-theme-text-quaternary opacity-70 hover:opacity-100 hover:bg-theme-bg-secondary hover:text-theme-text-primary hover:border-theme-border-primary',
+    tertiary: 'text-theme-text-quaternary opacity-70 hover:opacity-100 hover:bg-theme-bg-primary hover:text-theme-text-tertiary hover:border-theme-border-tertiary'
   };
 
   const baseClasses = `
@@ -38,7 +38,7 @@ const HistoryButton = forwardRef<HTMLButtonElement, HistoryButtonProps>(({
     border
     border-transparent
     transition-all
-    duration-200
+    duration-100
     ease-in-out
     flex
     items-center
@@ -46,7 +46,8 @@ const HistoryButton = forwardRef<HTMLButtonElement, HistoryButtonProps>(({
     truncate
     overflow-hidden
     hover:shadow-theme-button
-    hover:scale-[1.05]
+    hover:scale-[1.02]
+    hover:z-20
     hover:focus:ring-1
     hover:focus:ring-theme-border-tertiary
     hover:focus:outline-none
@@ -82,21 +83,9 @@ const HistoryButton = forwardRef<HTMLButtonElement, HistoryButtonProps>(({
       onClick={handleClick}
       {...props}
     >
-      {/* Corner dots - only visible when not hovered */}
-      <div className="absolute inset-0 pointer-events-none opacity-100 transition-opacity duration-200 group-hover:opacity-0">
-        {/* Top-left dot */}
-        <div className="absolute -top-px -left-px w-1.5 h-1.5 bg-theme-text-quaternary rounded-full opacity-50" />
-        {/* Top-right dot */}
-        <div className="absolute -top-px -right-px w-1.5 h-1.5 bg-theme-text-quaternary rounded-full opacity-50" />
-        {/* Bottom-left dot */}
-        <div className="absolute -bottom-px -left-px w-1.5 h-1.5 bg-theme-text-quaternary rounded-full opacity-50" />
-        {/* Bottom-right dot */}
-        <div className="absolute -bottom-px -right-px w-1.5 h-1.5 bg-theme-text-quaternary rounded-full opacity-50" />
-      </div>
-      
       {/* Gradient overlay - only visible on hover */}
       <div 
-        className="absolute inset-0 pointer-events-none rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        className="absolute inset-0 pointer-events-none rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-100"
         style={{
           background: 'linear-gradient(to bottom, var(--gradient-overlay), transparent)'
         }}
