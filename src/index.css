@@ -214,35 +214,55 @@
 @layer utilities {
   .noise {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: var(--noise-opacity);
     pointer-events: none;
   }
+  
+  .noise-mobile {
+    background-image: url("/noise.png");
+    background-repeat: repeat;
+    background-attachment: fixed;
+    opacity: var(--noise-opacity);
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+  }
   .justnoise {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: var(--justnoise-opacity);
   }
   
   /* Additional noise utilities with different opacities */
   .noise-light {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: 0.1;
     pointer-events: none;
   }
   
   .noise-medium {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: 0.3;
     pointer-events: none;
   }
   
   .noise-strong {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: 0.6;
     pointer-events: none;
   }
   
   .noise-custom {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: var(--custom-noise-opacity, 0.3);
     pointer-events: none;
   }
@@ -250,6 +270,7 @@
   /* Noise with different blend modes */
   .noise-multiply {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: var(--noise-opacity);
     mix-blend-mode: multiply;
     pointer-events: none;
@@ -257,6 +278,7 @@
   
   .noise-screen {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: var(--noise-opacity);
     mix-blend-mode: screen;
     pointer-events: none;
@@ -264,6 +286,7 @@
   
   .noise-soft-light {
     background-image: url("/noise.png");
+    background-repeat: repeat;
     opacity: var(--noise-opacity);
     mix-blend-mode: soft-light;
     pointer-events: none;

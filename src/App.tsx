@@ -235,6 +235,8 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const { style, toggleStyle } = useStyle();
   const isMobile = useMobileDetection();
+
+
   const playSuccessSound = () => {
     const sound = new Audio("/sounds/success.wav");
     sound.play().catch((error) => {
@@ -257,9 +259,9 @@ function App() {
   };
   return (
     <div className={`bg-theme-bg-primary ${isMobile ? 'min-h-screen' : 'fixed inset-0 overflow-hidden'}`}>
-      <div className="absolute inset-0 noise mix-blend-overlay opacity-50" />
+      <div className={`${isMobile ? 'noise-mobile' : 'absolute inset-0 noise'} mix-blend-overlay opacity-50`} />
 
-      <div className={`relative p-4 flex flex-col ${isMobile ? 'min-h-screen' : 'h-full'}`}>
+      <div className={`relative p-4 flex flex-col ${isMobile ? 'min-h-screen z-10' : 'h-full'}`}>
         {/* Centered Header */}
         <div className="flex flex-row justify-center items-center gap-2 mb-4">
           <h1 className="font-['Chakra_Petch'] text-3xl md:text-4xl font-bold text-theme-text-primary tracking-wider">
