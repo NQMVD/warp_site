@@ -133,11 +133,11 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
       <div className="absolute inset-0 noise mix-blend-overlay opacity-30 rounded-2xl" />
 
       <div className="relative flex flex-col h-full">
-        <h2 className="font-['Chakra_Petch'] text-6xl font-bold text-theme-text-primary mb-6 tracking-wider uppercase">
+        <h2 className="font-['Chakra_Petch'] text-3xl md:text-4xl lg:text-6xl font-bold text-theme-text-primary mb-4 md:mb-6 tracking-wider uppercase">
           {title}
         </h2>
 
-        <div className="flex gap-4 mb-4">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4">
           <TextBox
             type="text"
             value={query}
@@ -194,7 +194,7 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden">
           {searchHistory.length > 0 && (
-            <div className="grid grid-cols-4 gap-2 mt-4 pr-1 pl-1">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mt-4 pr-1 pl-1">
               {searchHistory.map((historicalQuery, index) => (
                 <Button
                   key={index}
@@ -249,17 +249,17 @@ function App() {
 
       <div className="relative h-full p-4 flex flex-col">
         {/* Centered Header */}
-        <div className="flex justify-center items-center gap-2 mb-4">
-          <h1 className="font-['Chakra_Petch'] text-4xl font-bold text-theme-text-primary tracking-wider">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-2 mb-4">
+          <h1 className="font-['Chakra_Petch'] text-3xl md:text-4xl font-bold text-theme-text-primary tracking-wider">
             WARP
           </h1>
-          <h1 className="font-['Jetbrains_Mono'] text-theme-text-tertiary text-theme-text-primary tracking-wider">
+          <h1 className="font-['Jetbrains_Mono'] text-lg md:text-xl text-theme-text-tertiary text-theme-text-primary tracking-wider">
             through space...
           </h1>
         </div>
 
         {/* Grid of panels */}
-        <div className="flex-1 grid grid-cols-2 gap-4">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
           <Panel title="CRATES.IO:" mute={isMuted} style={style}/>
           <Panel title="NIX:" mute={isMuted} style={style}/>
           <Panel title="REPOS:" mute={isMuted} style={style}/>
@@ -267,7 +267,7 @@ function App() {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-center gap-6 mt-4">
+        <div className="flex flex-wrap justify-center gap-6 mt-4">
           <a
             href="https://home.stardive.space"
             target="_blank"
