@@ -25,3 +25,19 @@ repos+stars.
 - hotkeys
 - responsive grids
 - customizable panels for you own preferences!
+- themes
+
+Notes:
+#FCFCFE, #ADAEE7, #6C6DAC, #565687, #41426E, #14152C
+
+primary = background
+
+secondary = card background
+
+tertiary = textbox,button background
+
+bg-hover = button hover
+
+border primary = card border
+
+border secondary = box,button border

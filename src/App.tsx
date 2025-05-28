@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useTheme } from "./ThemeContext";
+import { ThemeIcon } from "./ThemeIcon";
 
 function Panel({ title, mute }: { title: string; mute: boolean }) {
   const [query, setQuery] = useState("");
@@ -105,9 +107,9 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
   };
 
   return (
-    <div className="bg-zinc-900/80 rounded-2xl p-6 backdrop-blur-sm
-                    shadow-[0_8px_32px_rgba(0,0,0,0.4)]
-                    border border-zinc-800/50
+    <div className="bg-theme-bg-secondary rounded-2xl p-6 backdrop-blur-sm
+                    shadow-theme-panel
+                    border border-theme-border-primary
                     relative
                     h-full
                     flex flex-col
@@ -115,7 +117,7 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
       <div className="absolute inset-0 noise mix-blend-overlay opacity-30 rounded-2xl" />
 
       <div className="relative flex flex-col h-full">
-        <h2 className="font-['Chakra_Petch'] text-6xl font-bold text-white mb-6 tracking-wider uppercase">
+        <h2 className="font-['Chakra_Petch'] text-6xl font-bold text-theme-text-primary mb-6 tracking-wider uppercase">
           {title}
         </h2>
 
@@ -135,10 +137,10 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
                 }
               }
             }}
-            className="flex-1 h-12 bg-zinc-900 text-zinc-100 rounded-xl px-4
-                     shadow-[0_0_10px_rgba(0,0,0,0.7)]
-                     border border-zinc-800
-                     focus:outline-none focus:ring-1 focus:ring-zinc-700
+            className="flex-1 h-12 bg-theme-bg-tertiary text-theme-text-secondary rounded-xl px-4
+                     shadow-theme-button
+                     border border-theme-border-secondary
+                     focus:outline-none focus:ring-1 focus:ring-theme-border-tertiary
                      font-['JetBrains_Mono'] text-base
                      relative
                      overflow-hidden"
@@ -148,17 +150,17 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
           <div className="relative">
             <button
               onClick={handleSearch}
-              className="h-12 px-6 bg-zinc-900 text-zinc-100 rounded-xl
-                       shadow-[0_0_10px_rgba(0,0,0,0.7)]
-                       border border-zinc-800
-                       hover:bg-zinc-800 
-                       focus:outline-none focus:ring-1 focus:ring-zinc-700
+              className="h-12 px-6 bg-theme-bg-tertiary text-theme-text-secondary rounded-xl
+                       shadow-theme-button
+                       border border-theme-border-secondary
+                       hover:bg-theme-bg-hover 
+                       focus:outline-none focus:ring-1 focus:ring-theme-border-tertiary
                        font-['JetBrains_Mono'] text-base
                        transform transition-all duration-200 hover:scale-[1.05]
                        relative
                        overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/20 to-transparent rounded-xl" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
               <span className="relative">Search</span>
             </button>
           </div>
@@ -167,17 +169,17 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
             <div className="relative">
               <button
                 onClick={handleWarp}
-                className="h-12 px-6 bg-zinc-900 text-zinc-100 rounded-xl
-                       shadow-[0_0_10px_rgba(0,0,0,0.7)]
-                       border border-zinc-800
-                       hover:bg-zinc-800 
-                       focus:outline-none focus:ring-1 focus:ring-zinc-700
+                className="h-12 px-6 bg-theme-bg-tertiary text-theme-text-secondary rounded-xl
+                       shadow-theme-button
+                       border border-theme-border-secondary
+                       hover:bg-theme-bg-hover 
+                       focus:outline-none focus:ring-1 focus:ring-theme-border-tertiary
                        font-['JetBrains_Mono'] text-base
                        transform transition-all duration-200 hover:scale-[1.05]
                        relative
                        overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/20 to-transparent rounded-xl" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
                 <span className="relative">WARP</span>
               </button>
             </div>
@@ -191,10 +193,10 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
                 <button
                   key={index}
                   onClick={(e) => handleHistoryClick(historicalQuery, e)}
-                  className="px-2 py-2 bg-zinc-800/50 text-zinc-300 rounded-lg
-                           border border-zinc-700/50
-                           hover:bg-zinc-700/50 
-                           focus:outline-none focus:ring-1 focus:ring-zinc-600
+                  className="px-2 py-2 bg-theme-bg-tertiary text-theme-text-quaternary rounded-lg
+                           border border-theme-border-tertiary
+                           hover:bg-theme-bg-hover 
+                           focus:outline-none focus:ring-1 focus:ring-theme-border-secondary
                            font-['JetBrains_Mono'] text-sm
                            transform transition-all duration-200 hover:scale-[1.02]
                            truncate
@@ -202,7 +204,7 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
                            overflow-hidden
                            max-w-full"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-b from-zinc-700/20 to-transparent rounded-lg" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-lg" />
                   <span className="relative">{historicalQuery}</span>
                 </button>
               ))}
@@ -216,6 +218,7 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
 
 function App() {
   const [isMuted, setMuted] = useState("");
+  const { theme, toggleTheme } = useTheme();
   const playSuccessSound = () => {
     const sound = new Audio("/sounds/success.wav");
     sound.play().catch((error) => {
@@ -237,16 +240,16 @@ function App() {
     }
   };
   return (
-    <div className="fixed inset-0 bg-zinc-900 overflow-hidden">
+    <div className="fixed inset-0 bg-theme-bg-primary overflow-hidden">
       <div className="absolute inset-0 noise mix-blend-overlay opacity-50" />
 
       <div className="relative h-full p-4 flex flex-col">
         {/* Centered Header */}
         <div className="flex justify-center items-center gap-2 mb-4">
-          <h1 className="font-['Chakra_Petch'] text-4xl font-bold text-white tracking-wider">
+          <h1 className="font-['Chakra_Petch'] text-4xl font-bold text-theme-text-primary tracking-wider">
             WARP
           </h1>
-          <h1 className="font-['Jetbrains_Mono'] text-zinc-400 text-white tracking-wider">
+          <h1 className="font-['Jetbrains_Mono'] text-theme-text-tertiary text-theme-text-primary tracking-wider">
             through space...
           </h1>
         </div>
@@ -265,7 +268,7 @@ function App() {
             href="https://stardive.space"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-['JetBrains_Mono']"
+            className="flex items-center gap-2 text-theme-text-tertiary hover:text-theme-text-primary transition-colors font-['JetBrains_Mono']"
           >
             <svg
               className="w-5 h-5"
@@ -285,15 +288,15 @@ function App() {
           </a>
           <button
             onClick={toggleSounds}
-            className="h-7 px-6 text-zinc-400 rounded-xl
-                       shadow-[0_0_10px_rgba(0,0,0,0.7)]
-                       hover:text-white
-                       hover:bg-zinc-800 
+            className="h-7 px-6 text-theme-text-tertiary rounded-xl
+                       shadow-theme-button
+                       hover:text-theme-text-primary
+                       hover:bg-theme-bg-hover 
                        font-['JetBrains_Mono'] text-base
                        relative
                        overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/20 to-transparent rounded-xl" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
             <span className="relative">
               {isMuted && (
                     <svg
@@ -332,11 +335,26 @@ function App() {
               )}
             </span>
           </button>
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 h-7 px-6 text-theme-text-tertiary rounded-xl
+                       shadow-theme-button
+                       hover:text-theme-text-primary
+                       hover:bg-theme-bg-hover 
+                       font-['JetBrains_Mono'] text-base
+                       relative
+                       overflow-hidden
+                       transition-colors"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
+            <span className="relative capitalize">{theme}</span>
+            <ThemeIcon theme={theme} className="w-4 h-4 relative" />
+          </button>
           <a
             href="https://github.com/NQMVD/warp_site"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-['JetBrains_Mono']"
+            className="flex items-center gap-2 text-theme-text-tertiary hover:text-theme-text-primary transition-colors font-['JetBrains_Mono']"
           >
             <svg
               stroke="currentColor"
