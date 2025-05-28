@@ -16,9 +16,14 @@
   --text-tertiary: #a1a1aa;
   --text-quaternary: #d4d4d8;
   --noise-opacity: 0.5;
+  --custom-noise-opacity: 0.4;
+  --textbox-noise-opacity: 0.3;
+  --button-noise-opacity: 0.45;
   --panel-shadow: rgba(0, 0, 0, 0.4);
   --button-shadow: rgba(0, 0, 0, 0.7);
   --gradient-overlay: rgba(39, 39, 42, 0.2);
+  --gradient-overlay-alt: rgba(63, 63, 70, 0.15);
+  --gradient-overlay-strong: rgba(39, 39, 42, 0.4);
 }
 
 :root[data-theme="pastel"] {
@@ -34,9 +39,14 @@
   --text-tertiary: #E9E9EA;
   --text-quaternary: #E9E9EA;
   --noise-opacity: 0.5;
+  --custom-noise-opacity: 0.3;
+  --textbox-noise-opacity: 0.25;
+  --button-noise-opacity: 0.35;
   --panel-shadow: rgba(0, 0, 0, 0.4);
   --button-shadow: rgba(0, 0, 0, 0.7);
   --gradient-overlay: rgba(39, 39, 42, 0.2);
+  --gradient-overlay-alt: rgba(32, 32, 35, 0.15);
+  --gradient-overlay-strong: rgba(39, 39, 42, 0.4);
 }
 
 :root[data-theme="catppuccin"] {
@@ -52,27 +62,38 @@
   --text-tertiary: #a6adc8;
   --text-quaternary: #bac2de;
   --noise-opacity: 0.3;
+  --custom-noise-opacity: 0.2;
+  --textbox-noise-opacity: 0.15;
+  --button-noise-opacity: 0.25;
   --panel-shadow: rgba(17, 17, 27, 0.6);
   --button-shadow: rgba(17, 17, 27, 0.8);
   --gradient-overlay: rgba(69, 71, 90, 0.2);
+  --gradient-overlay-alt: rgba(49, 50, 68, 0.15);
+  --gradient-overlay-strong: rgba(69, 71, 90, 0.35);
 }
 
 :root[data-theme="vhs"] {
   --bg-primary: #14152C;
   --bg-secondary: #41426E;
-  --bg-tertiary: #565687;
+  --bg-tertiary: #41426E;
   --bg-hover: #6C6DAC;
   --border-primary: #41426E;
-  --border-secondary: #6C6DAC;
-  --border-tertiary: #6C6DAC;
+  --border-secondary: #41426E;
+  --border-tertiary: #41426E;
   --text-primary: #FCFCFE;
   --text-secondary: #bac2de;
   --text-tertiary: #a6adc8;
   --text-quaternary: #bac2de;
   --noise-opacity: 0.45;
+  --justnoise-opacity: 0.1;
+  --custom-noise-opacity: 0.35;
+  --textbox-noise-opacity: 0.3;
+  --button-noise-opacity: 0.4;
   --panel-shadow: rgba(17, 17, 27, 0.6);
-  --button-shadow: rgba(17, 17, 27, 0.8);
+  --button-shadow: rgba(17, 17, 27, 0.5);
   --gradient-overlay: rgba(39, 39, 42, 0.2);
+  --gradient-overlay-alt: rgba(65, 66, 110, 0.2);
+  --gradient-overlay-strong: rgba(39, 39, 42, 0.4);
 }
 
 :root[data-theme="cosmos"] {
@@ -88,9 +109,14 @@
   --text-tertiary: #a6adc8;
   --text-quaternary: #DFDFDF;
   --noise-opacity: 0.4;
+  --custom-noise-opacity: 0.3;
+  --textbox-noise-opacity: 0.25;
+  --button-noise-opacity: 0.35;
   --panel-shadow: rgba(17, 17, 27, 0.6);
   --button-shadow: rgba(17, 17, 27, 0.8);
   --gradient-overlay: rgba(17, 17, 17, 0.1);
+  --gradient-overlay-alt: rgba(55, 44, 71, 0.15);
+  --gradient-overlay-strong: rgba(17, 17, 17, 0.2);
 }
 
 :root[data-theme="aquamarine"] {
@@ -106,9 +132,14 @@
   --text-tertiary: #A7BDC8;
   --text-quaternary: #A4C4AD;
   --noise-opacity: 0.35;
+  --custom-noise-opacity: 0.25;
+  --textbox-noise-opacity: 0.2;
+  --button-noise-opacity: 0.3;
   --panel-shadow: rgba(17, 17, 27, 0.6);
   --button-shadow: rgba(17, 17, 27, 0.8);
   --gradient-overlay: rgba(164, 196, 173, 0.1);
+  --gradient-overlay-alt: rgba(69, 89, 100, 0.15);
+  --gradient-overlay-strong: rgba(164, 196, 173, 0.2);
 }
 
 :root[data-theme="peachclouds"] {
@@ -124,9 +155,14 @@
   --text-tertiary: #FFFFFF;
   --text-quaternary: #FFFFFF;
   --noise-opacity: 0.45;
+  --custom-noise-opacity: 0.35;
+  --textbox-noise-opacity: 0.3;
+  --button-noise-opacity: 0.4;
   --panel-shadow: rgba(193, 68, 89, 0.1);
   --button-shadow: rgba(193, 68, 89, 0.2);
   --gradient-overlay: rgba(213, 120, 102, 0.1);
+  --gradient-overlay-alt: rgba(155, 107, 178, 0.15);
+  --gradient-overlay-strong: rgba(213, 120, 102, 0.2);
 }
 
 :root[data-theme="milky"] {
@@ -142,9 +178,14 @@
   --text-tertiary: #a6adc8;
   --text-quaternary: #4622C6;
   --noise-opacity: 0.45;
+  --custom-noise-opacity: 0.35;
+  --textbox-noise-opacity: 0.3;
+  --button-noise-opacity: 0.4;
   --panel-shadow: rgba(17, 17, 27, 0.6);
   --button-shadow: rgba(17, 17, 27, 0.8);
   --gradient-overlay: rgba(200, 150, 200, 0.2);
+  --gradient-overlay-alt: rgba(144, 117, 252, 0.15);
+  --gradient-overlay-strong: rgba(200, 150, 200, 0.35);
 }
 
 :root[data-theme="light"] {
@@ -160,15 +201,71 @@
   --text-tertiary: #71717a;
   --text-quaternary: #52525b;
   --noise-opacity: 0.3;
+  --custom-noise-opacity: 0.2;
+  --textbox-noise-opacity: 0.15;
+  --button-noise-opacity: 0.25;
   --panel-shadow: rgba(0, 0, 0, 0.15);
   --button-shadow: rgba(0, 0, 0, 0.1);
   --gradient-overlay: rgba(228, 228, 231, 0.3);
+  --gradient-overlay-alt: rgba(212, 212, 216, 0.2);
+  --gradient-overlay-strong: rgba(228, 228, 231, 0.5);
 }
 
 @layer utilities {
   .noise {
     background-image: url("/noise.png");
     opacity: var(--noise-opacity);
+    pointer-events: none;
+  }
+  .justnoise {
+    background-image: url("/noise.png");
+    opacity: var(--justnoise-opacity);
+  }
+  
+  /* Additional noise utilities with different opacities */
+  .noise-light {
+    background-image: url("/noise.png");
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  
+  .noise-medium {
+    background-image: url("/noise.png");
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  
+  .noise-strong {
+    background-image: url("/noise.png");
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  .noise-custom {
+    background-image: url("/noise.png");
+    opacity: var(--custom-noise-opacity, 0.3);
+    pointer-events: none;
+  }
+  
+  /* Noise with different blend modes */
+  .noise-multiply {
+    background-image: url("/noise.png");
+    opacity: var(--noise-opacity);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  
+  .noise-screen {
+    background-image: url("/noise.png");
+    opacity: var(--noise-opacity);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  
+  .noise-soft-light {
+    background-image: url("/noise.png");
+    opacity: var(--noise-opacity);
+    mix-blend-mode: soft-light;
     pointer-events: none;
   }
 }

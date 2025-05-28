@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "./ThemeContext";
 import { ThemeIcon } from "./ThemeIcon";
+import { Button, TextBox } from "./components";
 
 function Panel({ title, mute }: { title: string; mute: boolean }) {
   const [query, setQuery] = useState("");
@@ -138,7 +139,7 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
         </h2>
 
         <div className="flex gap-4 mb-4">
-          <input
+          <TextBox
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -153,52 +154,42 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
                 }
               }
             }}
-            className="flex-1 h-12 bg-theme-bg-tertiary text-theme-text-secondary rounded-xl px-4
-                     shadow-theme-button
-                     border border-theme-border-secondary
-                     focus:outline-none focus:ring-1 focus:ring-theme-border-tertiary
-                     font-['JetBrains_Mono'] text-base
-                     relative
-                     overflow-hidden"
             placeholder="name..."
+            enableNoise={true}
+            noiseOpacity={0.2}
+            enableGradient={true}
+            gradientFrom="var(--gradient-overlay)"
+            gradientTo="transparent"
+            variant="primary"
           />
 
-          <div className="relative">
-            <button
-              onClick={handleSearch}
-              className="h-12 px-6 bg-theme-bg-tertiary text-theme-text-secondary rounded-xl
-                       shadow-theme-button
-                       border border-theme-border-secondary
-                       hover:bg-theme-bg-hover 
-                       focus:outline-none focus:ring-1 focus:ring-theme-border-tertiary
-                       font-['JetBrains_Mono'] text-base
-                       transform transition-all duration-200 hover:scale-[1.05]
-                       relative
-                       overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
-              <span className="relative">Search</span>
-            </button>
-          </div>
+          <Button
+            onClick={handleSearch}
+            soundEnabled={true}
+            soundType="click"
+            muted={mute}
+            enableGradient={true}
+            enableNoise={false}
+            variant="primary"
+            size="md"
+          >
+            Search
+          </Button>
 
           {(title == "CRATES.IO:" || title == "REPOS:") && (
-            <div className="relative">
-              <button
-                onClick={handleWarp}
-                className="h-12 px-6 bg-theme-bg-tertiary text-theme-text-secondary rounded-xl
-                       shadow-theme-button
-                       border border-theme-border-secondary
-                       hover:bg-theme-bg-hover 
-                       focus:outline-none focus:ring-1 focus:ring-theme-border-tertiary
-                       font-['JetBrains_Mono'] text-base
-                       transform transition-all duration-200 hover:scale-[1.05]
-                       relative
-                       overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
-                <span className="relative">WARP</span>
-              </button>
-            </div>
+            <Button
+              onClick={handleWarp}
+              soundEnabled={true}
+              soundType="whoosh"
+              muted={mute}
+              enableGradient={true}
+              enableNoise={true}
+              noiseOpacity={0.4}
+              variant="primary"
+              size="md"
+            >
+              WARP
+            </Button>
           )}
         </div>
 
@@ -206,23 +197,20 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
           {searchHistory.length > 0 && (
             <div className="grid grid-cols-3 gap-2 mt-4 pr-1 pl-1">
               {searchHistory.map((historicalQuery, index) => (
-                <button
+                <Button
                   key={index}
                   onClick={(e) => handleHistoryClick(historicalQuery, e)}
-                  className="px-2 py-2 bg-theme-bg-tertiary text-theme-text-quaternary rounded-lg
-                           border border-theme-border-tertiary
-                           hover:bg-theme-bg-hover 
-                           focus:outline-none focus:ring-1 focus:ring-theme-border-secondary
-                           font-['JetBrains_Mono'] text-sm
-                           transform transition-all duration-200 hover:scale-[1.02]
-                           truncate
-                           relative
-                           overflow-hidden
-                           max-w-full"
+                  soundEnabled={true}
+                  soundType="tick"
+                  muted={mute}
+                  enableGradient={true}
+                  enableNoise={false}
+                  variant="tertiary"
+                  size="sm"
+                  className="px-8 py-2 text-theme-text-quaternary rounded-lg truncate max-w-full"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-lg" />
-                  <span className="relative">{historicalQuery}</span>
-                </button>
+                  {historicalQuery}
+                </Button>
               ))}
             </div>
           )}
@@ -302,70 +290,61 @@ function App() {
             </svg>
             <span>Home</span>
           </a>
-          <button
+          <Button
             onClick={toggleSounds}
-            className="h-7 px-6 text-theme-text-tertiary rounded-xl
-                       shadow-theme-button
-                       hover:text-theme-text-primary
-                       hover:bg-theme-bg-hover 
-                       font-['JetBrains_Mono'] text-base
-                       relative
-                       overflow-hidden"
+            enableGradient={true}
+            enableNoise={false}
+            variant="tertiary"
+            size="sm"
+            className="h-7 px-6 text-theme-text-tertiary hover:text-theme-text-primary hover:bg-theme-bg-hover"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
-            <span className="relative">
-              {isMuted && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 16 16"
-                      width="16"
-                      height="16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        d="m2.75 1.75 10.5 12.5V1.75L9.318 5.245a2 2 0 0 1-1.328.505H6.11m.14 4.5h-2.5a1 1 0 0 1-1-1v-3.5"
-                      >
-                      </path>
-                    </svg>
-                  ) || (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 16 16"
-                  width="16"
-                  height="16"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    d="M12.75 5.75s1.5.75 1.5 2.25-1.5 2.25-1.5 2.25m-3.5-8.5L5.318 5.245a2 2 0 0 1-1.328.505H2.75a1 1 0 0 0-1 1v2.5a1 1 0 0 0 1 1h1.24a2 2 0 0 1 1.328.505L9.25 14.25V1.75Z"
+            {isMuted && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    height="16"
                   >
-                  </path>
-                </svg>
-              )}
-            </span>
-          </button>
-          <button
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="m2.75 1.75 10.5 12.5V1.75L9.318 5.245a2 2 0 0 1-1.328.505H6.11m.14 4.5h-2.5a1 1 0 0 1-1-1v-3.5"
+                    >
+                    </path>
+                  </svg>
+                ) || (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 16 16"
+                width="16"
+                height="16"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M12.75 5.75s1.5.75 1.5 2.25-1.5 2.25-1.5 2.25m-3.5-8.5L5.318 5.245a2 2 0 0 1-1.328.505H2.75a1 1 0 0 0-1 1v2.5a1 1 0 0 0 1 1h1.24a2 2 0 0 1 1.328.505L9.25 14.25V1.75Z"
+                >
+                </path>
+              </svg>
+            )}
+          </Button>
+          <Button
             onClick={toggleTheme}
-            className="flex items-center gap-2 h-7 px-6 text-theme-text-tertiary rounded-xl
-                       shadow-theme-button
-                       hover:text-theme-text-primary
-                       hover:bg-theme-bg-hover 
-                       font-['JetBrains_Mono'] text-base
-                       relative
-                       overflow-hidden
-                       transition-colors"
+            enableGradient={true}
+            enableNoise={false}
+            variant="tertiary"
+            size="sm"
+            className="flex items-center gap-2 h-7 px-6 text-theme-text-tertiary hover:text-theme-text-primary hover:bg-theme-bg-hover transition-colors"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--gradient-overlay)] to-transparent rounded-xl" />
-            <span className="relative capitalize">{theme}</span>
-            <ThemeIcon theme={theme} className="w-4 h-4 relative" />
-          </button>
+            <span className="capitalize">{theme}</span>
+            <ThemeIcon theme={theme} className="w-4 h-4" />
+          </Button>
           <a
             href="https://github.com/NQMVD/warp_site"
             target="_blank"
