@@ -10,11 +10,19 @@ export type Theme =
   | "aquamarine"
   | "milky"
   | "light";
+  
+export type Style =
+  | "primary"
+  | "secondary"
+  | "tertiary";
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  style: Style;
+  setStyle: (style: Style) => void;
+  toggleStyle: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -23,6 +31,13 @@ export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
     throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};
+export const useStyle = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("useStyle must be used within a ThemeProvider");
   }
   return context;
 };
@@ -36,6 +51,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const savedTheme = localStorage.getItem("warp-theme") as Theme;
     return savedTheme || "spacegray";
   });
+  const [style, setStyle] = useState<Style>("tertiary");
 
   useEffect(() => {
     localStorage.setItem("warp-theme", theme);
@@ -43,14 +59,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, [theme]);
 
   const toggleTheme = () => {
-    const playTickSound = () => {
-      const sound = new Audio("/sounds/button-1.wav");
-      if (!mute) {
-        sound.play().catch((error) => {
-          console.error("Error playing sound:", error);
-        });
-      }
-    };
     const themes: Theme[] = [
       "spacegray",
       "catppuccin",
@@ -64,11 +72,26 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const nextIndex = (currentIndex + 1) % themes.length;
     setTheme(themes[nextIndex]);
   };
+  
+  
+  const toggleStyle = () => {
+    const styles: Style[] = [
+      "primary",
+      "secondary",
+      "tertiary",
+    ];
+    const currentIndex = styles.indexOf(style);
+    const nextIndex = (currentIndex + 1) % styles.length;
+    setStyle(styles[nextIndex]);
+  };
 
   const value = {
     theme,
     setTheme,
     toggleTheme,
+    style,
+    setStyle,
+    toggleStyle,
   };
 
   return (

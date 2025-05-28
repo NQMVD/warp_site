@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "./ThemeContext";
-import { ThemeIcon } from "./ThemeIcon";
+import { Style, useStyle, useTheme } from "./ThemeContext";
 import { Button, TextBox } from "./components";
 
-function Panel({ title, mute }: { title: string; mute: boolean }) {
+function Panel({ title, mute, style }: { title: string; mute: boolean; style: Style }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   if (title == "CRATES.IO:") {
@@ -205,7 +204,7 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
                   muted={mute}
                   enableGradient={true}
                   enableNoise={false}
-                  variant="tertiary"
+                  variant={style}
                   size="sm"
                   className="w-full text-theme-text-quaternary truncate flex items-center justify-center"
                 >
@@ -223,6 +222,7 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
 function App() {
   const [isMuted, setMuted] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { style, toggleStyle } = useStyle();
   const playSuccessSound = () => {
     const sound = new Audio("/sounds/success.wav");
     sound.play().catch((error) => {
@@ -260,16 +260,16 @@ function App() {
 
         {/* Grid of panels */}
         <div className="flex-1 grid grid-cols-2 gap-4">
-          <Panel title="CRATES.IO:" mute={isMuted} />
-          <Panel title="NIX:" mute={isMuted} />
-          <Panel title="REPOS:" mute={isMuted} />
-          <Panel title="STARS:" mute={isMuted} />
+          <Panel title="CRATES.IO:" mute={isMuted} style={style}/>
+          <Panel title="NIX:" mute={isMuted} style={style}/>
+          <Panel title="REPOS:" mute={isMuted} style={style}/>
+          <Panel title="STARS:" mute={isMuted} style={style} />
         </div>
 
         {/* Footer */}
         <div className="flex justify-center gap-6 mt-4">
           <a
-            href="https://stardive.space"
+            href="https://home.stardive.space"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-theme-text-tertiary hover:text-theme-text-primary transition-colors font-['JetBrains_Mono']"
@@ -342,8 +342,17 @@ function App() {
             size="sm"
             className="flex items-center gap-2 h-7 px-6 text-theme-text-tertiary hover:text-theme-text-primary hover:bg-theme-bg-hover transition-colors"
           >
-            <span className="capitalize">{theme}</span>
-            <ThemeIcon theme={theme} className="w-4 h-4" />
+            <span className="capitalize">theme: {theme}</span>
+          </Button>
+          <Button
+            onClick={toggleStyle}
+            enableGradient={true}
+            enableNoise={false}
+            variant="tertiary"
+            size="sm"
+            className="flex items-center gap-2 h-7 px-6 text-theme-text-tertiary hover:text-theme-text-primary hover:bg-theme-bg-hover transition-colors"
+          >
+            <span className="capitalize">style: {style}</span>
           </Button>
           <a
             href="https://github.com/NQMVD/warp_site"

@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { Style } from '../ThemeContext';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   noiseOpacity?: number;
@@ -6,7 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   gradientTo?: string;
   enableGradient?: boolean;
   enableNoise?: boolean;
-  variant?: 'primary' | 'secondary' | 'tertiary';
+  variant?: Style;
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
   soundEnabled?: boolean;
