@@ -130,10 +130,10 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
                     shadow-theme-panel
                     border border-theme-border-primary
                     relative
-                    h-auto lg:h-full
+                    ${isMobile ? 'h-auto' : 'h-auto lg:h-full'}
                     flex flex-col
-                    overflow-hidden
-                    lg:min-h-[300px] ${className || ''}`}>
+                    ${isMobile ? '' : 'overflow-hidden'}
+                    ${isMobile ? '' : 'lg:min-h-[300px]'} ${className || ''}`}>
       <div className="absolute inset-0 noise mix-blend-overlay opacity-30 rounded-2xl" />
 
       <div className="relative flex flex-col h-full">
@@ -256,10 +256,10 @@ function App() {
     }
   };
   return (
-    <div className="fixed inset-0 bg-theme-bg-primary overflow-hidden">
+    <div className={`bg-theme-bg-primary ${isMobile ? 'min-h-screen' : 'fixed inset-0 overflow-hidden'}`}>
       <div className="absolute inset-0 noise mix-blend-overlay opacity-50" />
 
-      <div className="relative h-full p-4 flex flex-col">
+      <div className={`relative p-4 flex flex-col ${isMobile ? 'min-h-screen' : 'h-full'}`}>
         {/* Centered Header */}
         <div className="flex flex-row justify-center items-center gap-2 mb-4">
           <h1 className="font-['Chakra_Petch'] text-3xl md:text-4xl font-bold text-theme-text-primary tracking-wider">
@@ -271,7 +271,7 @@ function App() {
         </div>
 
         {/* Grid of panels */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className={`grid grid-cols-1 gap-4 ${isMobile ? 'mb-4' : 'flex-1 lg:grid-cols-2'}`}>
           <Panel title="CRATES.IO:" mute={isMuted} style={style} className="order-1 lg:order-none"/>
           <Panel title="NIX:" mute={isMuted} style={style} className="order-3 lg:order-none"/>
           <Panel title="REPOS:" mute={isMuted} style={style} className="order-2 lg:order-none"/>
