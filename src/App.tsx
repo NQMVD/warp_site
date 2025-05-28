@@ -167,7 +167,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
             className="w-full"
           />
 
-          <div className="flex flex-row gap-2 flex-shrink-0">
+          <div className={`flex flex-row gap-2 ${isMobile ? 'w-full' : 'flex-shrink-0'}`}>
             <Button
               onClick={handleSearch}
               soundEnabled={true}
@@ -177,6 +177,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
               enableNoise={false}
               variant="primary"
               size="md"
+              className={isMobile ? 'flex-1' : ''}
             >
               Search
             </Button>
@@ -192,6 +193,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
                 noiseOpacity={0.4}
                 variant="primary"
                 size="md"
+                className={isMobile ? 'flex-1' : ''}
               >
                 WARP
               </Button>
@@ -199,28 +201,30 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-theme-border-primary scrollbar-track-transparent">
-          {searchHistory.length > 0 && (
-            <div className="grid grid-cols-4 gap-2 mt-4 pr-1 pl-1 max-h-[4.5rem] md:max-h-[7rem]">
-              {searchHistory.map((historicalQuery, index) => (
-                <Button
-                  key={index}
-                  onClick={(e) => handleHistoryClick(historicalQuery, e)}
-                  soundEnabled={true}
-                  soundType="tick"
-                  muted={mute}
-                  enableGradient={true}
-                  enableNoise={false}
-                  variant={style}
-                  size="sm"
-                  className="w-full text-theme-text-quaternary truncate flex items-center justify-center"
-                >
-                  {historicalQuery}
-                </Button>
-              ))}
-            </div>
-          )}
-        </div>
+        {!isMobile && (
+          <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-theme-border-primary scrollbar-track-transparent">
+            {searchHistory.length > 0 && (
+              <div className="grid grid-cols-4 gap-2 mt-4 pr-1 pl-1 max-h-[4.5rem] md:max-h-[7rem]">
+                {searchHistory.map((historicalQuery, index) => (
+                  <Button
+                    key={index}
+                    onClick={(e) => handleHistoryClick(historicalQuery, e)}
+                    soundEnabled={true}
+                    soundType="tick"
+                    muted={mute}
+                    enableGradient={true}
+                    enableNoise={false}
+                    variant={style}
+                    size="sm"
+                    className="w-full text-theme-text-quaternary truncate flex items-center justify-center"
+                  >
+                    {historicalQuery}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
