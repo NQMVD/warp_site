@@ -5,22 +5,13 @@ import { Button, TextBox } from "./components";
 function Panel({ title, mute, style }: { title: string; mute: boolean; style: Style }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
-  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 640);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsWideScreen(window.innerWidth >= 640);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   if (title == "CRATES.IO:") {
     if (!searchHistory.includes("boss-cli")) {
       setSearchHistory((prev) => ["boss-cli", ...prev]);
     }
     if (!searchHistory.includes("needs")) {
-      setSearchHistory((prev) => ["needs", ...prev]);
+      setSearchHistory((prev) => ["needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", ...prev]);
     }
   }
   if (title == "REPOS:") {
@@ -28,7 +19,7 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
       setSearchHistory((prev) => ["boss", ...prev]);
     }
     if (!searchHistory.includes("needs")) {
-      setSearchHistory((prev) => ["needs", ...prev]);
+      setSearchHistory((prev) => ["needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", ...prev]);
     }
   }
 
@@ -137,10 +128,10 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
                     shadow-theme-panel
                     border border-theme-border-primary
                     relative
-                    h-auto sm:h-full
+                    h-auto lg:h-full
                     flex flex-col
                     overflow-hidden
-                    sm:min-h-[300px]">
+                    lg:min-h-[300px]">
       <div className="absolute inset-0 noise mix-blend-overlay opacity-30 rounded-2xl" />
 
       <div className="relative flex flex-col h-full">
@@ -148,7 +139,7 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
           {title}
         </h2>
 
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-4">
           <TextBox
             type="text"
             value={query}
@@ -204,8 +195,8 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
         </div>
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-theme-border-primary scrollbar-track-transparent">
-          {searchHistory.length > 0 && isWideScreen && (
-            <div className="grid grid-cols-3 lg:grid-cols-4 gap-2 mt-4 pr-1 pl-1">
+          {searchHistory.length > 0 && (
+            <div className="grid grid-cols-4 gap-2 mt-4 pr-1 pl-1 max-h-[4.5rem] md:max-h-[7rem]">
               {searchHistory.map((historicalQuery, index) => (
                 <Button
                   key={index}
@@ -270,7 +261,7 @@ function App() {
         </div>
 
         {/* Grid of panels */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Panel title="CRATES.IO:" mute={isMuted} style={style}/>
           <Panel title="NIX:" mute={isMuted} style={style}/>
           <Panel title="REPOS:" mute={isMuted} style={style}/>
