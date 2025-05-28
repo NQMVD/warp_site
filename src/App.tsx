@@ -5,6 +5,16 @@ import { Button, TextBox } from "./components";
 function Panel({ title, mute, style }: { title: string; mute: boolean; style: Style }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 640);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWideScreen(window.innerWidth >= 640);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   if (title == "CRATES.IO:") {
     if (!searchHistory.includes("boss-cli")) {
       setSearchHistory((prev) => ["boss-cli", ...prev]);
@@ -127,9 +137,10 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
                     shadow-theme-panel
                     border border-theme-border-primary
                     relative
-                    h-[400px] md:h-full
+                    h-auto sm:h-full
                     flex flex-col
-                    overflow-hidden">
+                    overflow-hidden
+                    sm:min-h-[300px]">
       <div className="absolute inset-0 noise mix-blend-overlay opacity-30 rounded-2xl" />
 
       <div className="relative flex flex-col h-full">
@@ -137,7 +148,7 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
           {title}
         </h2>
 
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
           <TextBox
             type="text"
             value={query}
@@ -193,8 +204,8 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
         </div>
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-theme-border-primary scrollbar-track-transparent">
-          {searchHistory.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mt-4 pr-1 pl-1">
+          {searchHistory.length > 0 && isWideScreen && (
+            <div className="grid grid-cols-3 lg:grid-cols-4 gap-2 mt-4 pr-1 pl-1">
               {searchHistory.map((historicalQuery, index) => (
                 <Button
                   key={index}
@@ -259,7 +270,7 @@ function App() {
         </div>
 
         {/* Grid of panels */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[calc(100vh-12rem)] md:max-h-none">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
           <Panel title="CRATES.IO:" mute={isMuted} style={style}/>
           <Panel title="NIX:" mute={isMuted} style={style}/>
           <Panel title="REPOS:" mute={isMuted} style={style}/>
