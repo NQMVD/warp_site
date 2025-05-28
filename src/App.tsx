@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Style, useStyle, useTheme } from "./ThemeContext";
 import { Button, TextBox } from "./components";
+import { useMobileDetection } from "./hooks/useMobileDetection";
 
 function Panel({ title, mute, style, className }: { title: string; mute: boolean; style: Style; className?: string }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const isMobile = useMobileDetection();
 
   if (title == "CRATES.IO:") {
     if (!searchHistory.includes("boss-cli")) {
@@ -139,7 +141,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
           {title}
         </h2>
 
-        <div className="flex flex-col md:flex-row gap-2 md:gap-4">
+        <div className={`flex gap-2 md:gap-4 ${isMobile ? 'flex-col' : 'flex-row'}`}>
           <TextBox
             type="text"
             value={query}
@@ -165,7 +167,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
             className="w-full"
           />
 
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-2 flex-shrink-0">
             <Button
               onClick={handleSearch}
               soundEnabled={true}
@@ -228,6 +230,7 @@ function App() {
   const [isMuted, setMuted] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { style, toggleStyle } = useStyle();
+  const isMobile = useMobileDetection();
   const playSuccessSound = () => {
     const sound = new Audio("/sounds/success.wav");
     sound.play().catch((error) => {
@@ -254,7 +257,7 @@ function App() {
 
       <div className="relative h-full p-4 flex flex-col">
         {/* Centered Header */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-2 mb-4">
+        <div className="flex flex-row justify-center items-center gap-2 mb-4">
           <h1 className="font-['Chakra_Petch'] text-3xl md:text-4xl font-bold text-theme-text-primary tracking-wider">
             WARP
           </h1>
