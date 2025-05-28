@@ -13,3 +13,11 @@ default:
 @build:
     gum log -l "info" "Building the application..."
     deno task build
+
+@update:
+    gum log -l "info" "Updating project..."
+    git pull
+    gum log -l "info" "Updating dependencies..."
+    deno task update
+    gum log -l "info" "Building the application..."
+    deno task build
