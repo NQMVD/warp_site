@@ -28,7 +28,6 @@ repos+stars.
 - themes
 
 Notes:
-#FCFCFE, #ADAEE7, #6C6DAC, #565687, #41426E, #14152C
 
 primary = background
 
@@ -41,3 +40,10 @@ bg-hover = button hover
 border primary = card border
 
 border secondary = box,button border
+
+Themes:
+- https://coolors.co/6e6e6e-595959-2f2f2f-1c1c1c-181818-111111
+- https://coolors.co/f5edfc-e4d5f6-c7cbfe-d995fd-9c4dde-9075fc-4622c6
+- cosmos = https://coolors.co/ffffff-ac6881-683e51-403352-372c47-231d30-0e0e19
+- https://coolors.co/a4c4ad-a7bdc8-6b8a9c-455964-3b4d57-232e34
+- https://coolors.co/d8696f-9b6bb2-d57866-c14459-b582c4-623a76

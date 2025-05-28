@@ -43,6 +43,14 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, [theme]);
 
   const toggleTheme = () => {
+    const playTickSound = () => {
+      const sound = new Audio("/sounds/button-1.wav");
+      if (!mute) {
+        sound.play().catch((error) => {
+          console.error("Error playing sound:", error);
+        });
+      }
+    };
     const themes: Theme[] = [
       "spacegray",
       "catppuccin",

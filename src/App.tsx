@@ -233,7 +233,7 @@ function Panel({ title, mute }: { title: string; mute: boolean }) {
 }
 
 function App() {
-  const [isMuted, setMuted] = useState("");
+  const [isMuted, setMuted] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const playSuccessSound = () => {
     const sound = new Audio("/sounds/success.wav");

@@ -10,7 +10,7 @@
   --bg-hover: #27272a;
   --border-primary: rgba(39, 39, 42, 0.5);
   --border-secondary: #27272a;
-  --border-tertiary: rgba(63, 63, 70, 0.5);
+  --border-tertiary: rgba(63, 63, 70, 0.3);
   --text-primary: #ffffff;
   --text-secondary: #f4f4f5;
   --text-tertiary: #a1a1aa;
@@ -76,21 +76,21 @@
 }
 
 :root[data-theme="cosmos"] {
-  --bg-primary: #0E0E19;
+  --bg-primary: #231D30;
   --bg-secondary: #372C47;
   --bg-tertiary: #372C47;
   --bg-hover: rgba(255, 153, 110, 0.1);
   --border-primary: #372C47;
-  --border-secondary: #372C47;
-  --border-tertiary: #372C47;
+  --border-secondary: #403352;
+  --border-tertiary: #403352;
   --text-primary: #FFFFFF;
-  --text-secondary: #FF996E;
+  --text-secondary: #FFFFFF;
   --text-tertiary: #a6adc8;
-  --text-quaternary: #FF996E;
-  --noise-opacity: 0.45;
+  --text-quaternary: #DFDFDF;
+  --noise-opacity: 0.4;
   --panel-shadow: rgba(17, 17, 27, 0.6);
   --button-shadow: rgba(17, 17, 27, 0.8);
-  --gradient-overlay: rgba(255, 153, 110, 0.1);
+  --gradient-overlay: rgba(17, 17, 17, 0.1);
 }
 
 :root[data-theme="aquamarine"] {
@@ -105,7 +105,7 @@
   --text-secondary: #A4C4AD;
   --text-tertiary: #A7BDC8;
   --text-quaternary: #A4C4AD;
-  --noise-opacity: 0.45;
+  --noise-opacity: 0.35;
   --panel-shadow: rgba(17, 17, 27, 0.6);
   --button-shadow: rgba(17, 17, 27, 0.8);
   --gradient-overlay: rgba(164, 196, 173, 0.1);
@@ -159,7 +159,7 @@
   --text-secondary: #18181b;
   --text-tertiary: #71717a;
   --text-quaternary: #52525b;
-  --noise-opacity: 0.2;
+  --noise-opacity: 0.3;
   --panel-shadow: rgba(0, 0, 0, 0.15);
   --button-shadow: rgba(0, 0, 0, 0.1);
   --gradient-overlay: rgba(228, 228, 231, 0.3);
