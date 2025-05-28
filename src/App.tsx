@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Style, useStyle, useTheme } from "./ThemeContext";
 import { Button, TextBox } from "./components";
 
-function Panel({ title, mute, style }: { title: string; mute: boolean; style: Style }) {
+function Panel({ title, mute, style, className }: { title: string; mute: boolean; style: Style; className?: string }) {
   const [query, setQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
 
@@ -19,7 +19,7 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
       setSearchHistory((prev) => ["boss", ...prev]);
     }
     if (!searchHistory.includes("needs")) {
-      setSearchHistory((prev) => ["needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", ...prev]);
+      setSearchHistory((prev) => ["needs", "needs", "needs", "needs", "needs", "needs", "needs", ...prev]);
     }
   }
 
@@ -124,14 +124,14 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
   };
 
   return (
-    <div className="bg-theme-bg-secondary rounded-2xl p-6 backdrop-blur-sm
+    <div className={`bg-theme-bg-secondary rounded-2xl p-6 backdrop-blur-sm
                     shadow-theme-panel
                     border border-theme-border-primary
                     relative
                     h-auto lg:h-full
                     flex flex-col
                     overflow-hidden
-                    lg:min-h-[300px]">
+                    lg:min-h-[300px] ${className || ''}`}>
       <div className="absolute inset-0 noise mix-blend-overlay opacity-30 rounded-2xl" />
 
       <div className="relative flex flex-col h-full">
@@ -162,36 +162,39 @@ function Panel({ title, mute, style }: { title: string; mute: boolean; style: St
             gradientFrom="var(--gradient-overlay)"
             gradientTo="transparent"
             variant="primary"
+            className="w-full"
           />
 
-          <Button
-            onClick={handleSearch}
-            soundEnabled={true}
-            soundType="click"
-            muted={mute}
-            enableGradient={true}
-            enableNoise={false}
-            variant="primary"
-            size="md"
-          >
-            Search
-          </Button>
-
-          {(title == "CRATES.IO:" || title == "REPOS:") && (
+          <div className="flex flex-row gap-2">
             <Button
-              onClick={handleWarp}
+              onClick={handleSearch}
               soundEnabled={true}
-              soundType="whoosh"
+              soundType="click"
               muted={mute}
               enableGradient={true}
-              enableNoise={true}
-              noiseOpacity={0.4}
+              enableNoise={false}
               variant="primary"
               size="md"
             >
-              WARP
+              Search
             </Button>
-          )}
+
+            {(title == "CRATES.IO:" || title == "REPOS:") && (
+              <Button
+                onClick={handleWarp}
+                soundEnabled={true}
+                soundType="whoosh"
+                muted={mute}
+                enableGradient={true}
+                enableNoise={true}
+                noiseOpacity={0.4}
+                variant="primary"
+                size="md"
+              >
+                WARP
+              </Button>
+            )}
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-theme-border-primary scrollbar-track-transparent">
@@ -262,10 +265,10 @@ function App() {
 
         {/* Grid of panels */}
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <Panel title="CRATES.IO:" mute={isMuted} style={style}/>
-          <Panel title="NIX:" mute={isMuted} style={style}/>
-          <Panel title="REPOS:" mute={isMuted} style={style}/>
-          <Panel title="STARS:" mute={isMuted} style={style} />
+          <Panel title="CRATES.IO:" mute={isMuted} style={style} className="order-1 lg:order-none"/>
+          <Panel title="NIX:" mute={isMuted} style={style} className="order-3 lg:order-none"/>
+          <Panel title="REPOS:" mute={isMuted} style={style} className="order-2 lg:order-none"/>
+          <Panel title="STARS:" mute={isMuted} style={style} className="order-4 lg:order-none"/>
         </div>
 
         {/* Footer */}
