@@ -13,7 +13,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
       setSearchHistory((prev) => ["boss-cli", ...prev]);
     }
     if (!searchHistory.includes("needs")) {
-      setSearchHistory((prev) => ["needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", "needs", ...prev]);
+      setSearchHistory((prev) => ["needs", ...prev]);
     }
   }
   if (title == "REPOS:") {
@@ -21,7 +21,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
       setSearchHistory((prev) => ["boss", ...prev]);
     }
     if (!searchHistory.includes("needs")) {
-      setSearchHistory((prev) => ["needs", "needs", "needs", "needs", "needs", "needs", "needs", ...prev]);
+      setSearchHistory((prev) => ["needs", ...prev]);
     }
   }
 
