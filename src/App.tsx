@@ -69,8 +69,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
       // Construct the URL based on the panel's title and query
       const baseUrls: Record<string, string> = {
         "CRATES.IO:": "https://crates.io/search?q=",
-        "NIX:":
-          "https://search.nixos.org/packages?channel=24.11&from=0&size=50&sort=relevance&type=packages&query=",
+        "BREW:": "https://github.com/Homebrew/homebrew-core/search?q=",
         "REPOS:": "https://github.com/NQMVD?tab=repositories&q=",
         "STARS:":
           "https://github.com/NQMVD?submit=Search&tab=stars&type=&sort=&direction=&submit=Search&q=",
@@ -95,8 +94,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
       // Construct the URL based on the panel's title and query
       const baseUrls: Record<string, string> = {
         "CRATES.IO:": "https://crates.io/crates/",
-        "NIX:":
-          "https://search.nixos.org/packages?channel=24.11&from=0&size=50&sort=relevance&type=packages&query=",
+        "BREW:": "https://formulae.brew.sh/formula/",
         "REPOS:": "https://github.com/NQMVD/",
         "STARS:":
           "https://github.com/NQMVD?submit=Search&tab=stars&type=&sort=&direction=&submit=Search&q=",
@@ -182,7 +180,7 @@ function Panel({ title, mute, style, className }: { title: string; mute: boolean
               Search
             </Button>
 
-            {(title == "CRATES.IO:" || title == "REPOS:") && (
+            {(title == "CRATES.IO:" || title == "REPOS:" || title == "BREW:") && (
               <Button
                 onClick={handleWarp}
                 soundEnabled={true}
@@ -275,7 +273,7 @@ function App() {
         {/* Grid of panels */}
         <div className={`grid grid-cols-1 gap-4 ${isMobile ? 'mb-4' : 'flex-1 lg:grid-cols-2'}`}>
           <Panel title="CRATES.IO:" mute={isMuted} style={style} className="order-1 lg:order-none"/>
-          <Panel title="NIX:" mute={isMuted} style={style} className="order-3 lg:order-none"/>
+          <Panel title="BREW:" mute={isMuted} style={style} className="order-3 lg:order-none"/>
           <Panel title="REPOS:" mute={isMuted} style={style} className="order-2 lg:order-none"/>
           <Panel title="STARS:" mute={isMuted} style={style} className="order-4 lg:order-none"/>
         </div>
