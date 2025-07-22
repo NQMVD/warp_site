@@ -55,16 +55,17 @@ const HistoryButton = forwardRef<HTMLButtonElement, HistoryButtonProps>(({
     ${className}
   `.trim().replace(/\s+/g, ' ');
 
+  const soundCache: Record<string, HTMLAudioElement> = {
+    click: new Audio('/sounds/button-2.wav'),
+    tick: new Audio('/sounds/button-1.wav'),
+    whoosh: new Audio('/sounds/whoosh-2.wav'),
+  };
+
   const playSound = () => {
     if (!soundEnabled || muted) return;
     
-    const soundFiles = {
-      click: '/sounds/button-2.wav',
-      tick: '/sounds/button-1.wav',
-      whoosh: '/sounds/whoosh-2.wav'
-    };
-
-    const sound = new Audio(soundFiles[soundType]);
+    const sound = soundCache[soundType];
+    sound.currentTime = 0; // Reset playback to the start
     sound.play().catch((error) => {
       console.error('Error playing sound:', error);
     });
