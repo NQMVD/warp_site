@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  -electron-corner-smoothing: system-ui;
+}
+
 /* Theme Variables */
 :root[data-theme="spacegray"] {
   --bg-primary: #18181b;
@@ -304,4 +308,8 @@
 @font-face {
   font-family: "Chakra Petch";
   src: url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap");
+}
+
+:root {
+  -electron-corner-smoothing: system-ui;
 }
