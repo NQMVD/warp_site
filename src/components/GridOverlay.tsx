@@ -28,7 +28,7 @@ const GridOverlay: React.FC<GridOverlayProps> = ({
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  const effectiveButtonWidth = buttonWidth || (dimensions.width / 4); // 4 columns default
+  const effectiveButtonWidth = buttonWidth || (dimensions.width / defaultColumns); // Use configurable default columns
   const cols = Math.floor(dimensions.width / effectiveButtonWidth);
   const rows = Math.floor(dimensions.height / buttonHeight);
   const dots: React.ReactNode[] = [];
